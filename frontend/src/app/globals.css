@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold-50: #fff9e6;
+  --color-gold-100: #ffefc2;
+  --color-gold-200: #ffe199;
+  --color-gold-300: #ffd270;
+  --color-gold-400: #ffc247;
+  --color-gold-500: #d4af37;
+  --color-gold-600: #b5952f;
+  --color-gold-700: #917726;
+  --color-gold-800: #705c1d;
+  --color-gold-900: #4f4115;
+  --color-gold-950: #2e260c;
+
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+}
+
+:root {
+  --background: #09090b;
+  --foreground: #fafafa;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.glass {
+  background: rgba(24, 24, 27, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.text-gradient-gold {
+  background: linear-gradient(to right, #d4af37, #ffe199);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Splash Screen Animations */
+.splash-enter {
+  animation: splashFadeIn 1s ease-out forwards;
+}
+
+.splash-exit {
+  animation: splashFadeOut 0.8s ease-in forwards;
+}
+
+.splash-text {
+  animation: splashZoomIn 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.splash-line {
+  animation: splashExpandLine 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: 0.5s;
+}
+
+.splash-fade-in {
+  animation: splashFadeIn 2s ease-in-out forwards;
+}
+
+.splash-fade-in-late {
+  opacity: 0;
+  animation: splashFadeIn 1s ease-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes splashFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes splashFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes splashZoomIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.9); 
+    filter: blur(10px);
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1);
+    filter: blur(0px);
+  }
+}
+
+@keyframes splashExpandLine {
+  from { width: 0; opacity: 0; }
+  to { width: 100%; max-width: 300px; opacity: 1; }
+}

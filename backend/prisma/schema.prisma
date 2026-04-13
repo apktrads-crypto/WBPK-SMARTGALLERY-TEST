@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Event {
+  id          String     @id @default(uuid())
+  name        String
+  slug        String     @unique
+  date        DateTime?
+  coverImage  String?
+  password    String?    // Nullable if public
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  categories  Category[]
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  eventId   String
+  name      String   // e.g., "Haldi", "Wedding"
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  photos    Photo[]
+  videos    Video[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([eventId, name])
+}
+
+model Photo {
+  id         String   @id @default(uuid())
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  
+  originalUrl  String
+  mediumUrl    String?
+  thumbnailUrl String?
+  
+  // Storing the face embeddings as a JSON array natively supported by Prisma without pgvector
+  faceEmbeddings Json? 
+
+  isFavorite Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+}
+
+model Video {
+  id         String   @id @default(uuid())
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  
+  videoUrl  String
+  thumbnailUrl String?
+  
+  createdAt DateTime @default(now())
+}
