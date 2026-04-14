@@ -41,7 +41,8 @@ const processImageWorker = new Worker('image-processing', async job => {
       data: { mediumUrl, thumbnailUrl }
     });
 
-    const faceResponse = await fetch('http://localhost:8000/extract-faces', {
+    const faceServiceUrl = process.env.FACE_SERVICE_URL || 'http://localhost:8000';
+    const faceResponse = await fetch(`${faceServiceUrl}/extract-faces`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ imageUrl: filePath })
