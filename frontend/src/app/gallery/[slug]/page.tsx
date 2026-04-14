@@ -3,7 +3,8 @@ import GalleryView from './GalleryView';
 
 async function fetchEvent(slug: string) {
   try {
-    const res = await fetch(`http://localhost:5000/api/events/${slug}`, { cache: 'no-store' });
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+    const res = await fetch(`${apiUrl}/api/events/${slug}`, { cache: 'no-store' });
     if (!res.ok) return null;
     return await res.json();
   } catch {

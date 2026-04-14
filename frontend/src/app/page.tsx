@@ -23,8 +23,9 @@ export default function Home() {
     }
 
     try {
-      // Direct call to port 5000 for local development
-      const res = await fetch("http://localhost:5000/api/auth/event-login", {
+      // Use environment variable for API URL
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiUrl}/api/auth/event-login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ eventSlug, password }),

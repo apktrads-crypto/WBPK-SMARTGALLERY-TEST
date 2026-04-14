@@ -50,7 +50,8 @@ export default function AdminUploadPage() {
   const fetchEvents = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/events');
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiUrl}/api/events`);
       if (res.ok) {
         const data = await res.json();
         setEvents(data);
@@ -71,7 +72,8 @@ export default function AdminUploadPage() {
     setDriveImporting(true);
     setDriveResult(null);
     try {
-      const res = await fetch('http://localhost:5000/api/drive/import', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiUrl}/api/drive/import`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -108,7 +110,8 @@ export default function AdminUploadPage() {
       formData.append('eventId', selectedEventId);
       formData.append('categoryName', newCategoryName);
       try {
-        const res = await fetch('http://localhost:5000/api/upload', {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${apiUrl}/api/upload`, {
           method: 'POST',
           body: formData,
         });
@@ -124,7 +127,8 @@ export default function AdminUploadPage() {
   const handleDeleteEvent = async (id: string, name: string) => {
     if (!confirm(`Are you sure you want to delete "${name}"? This cannot be undone.`)) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/events/${id}`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiUrl}/api/events/${id}`, {
         method: 'DELETE',
       });
       if (res.ok) {
@@ -140,7 +144,8 @@ export default function AdminUploadPage() {
   const handleCreateEvent = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/events', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+      const res = await fetch(`${apiUrl}/api/events`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
